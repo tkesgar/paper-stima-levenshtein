@@ -1,0 +1,29 @@
+int levenshteindistance(char a[1..m], char b[1..n])
+	// dp[i][j] contains the levenshtein distance
+	// between a[0..i] and b[0..j]
+	dp: array of int[0..m][0..n]
+	
+	// the levenshtein distance of a string and
+	// an empty string is equal with the length
+	// of the string
+	for i in [0..m] dp[i][0] = i
+	for j in [0..n] dp[0][j] = j
+	
+	for i in [1..m]
+		for j in [1..n]
+			if a[i] == b[j]
+				// no operation is required
+				dp[i][j] = dp[i-1][j-1]
+			else
+				// select the minimum levenshtein
+				// distance between deletion,
+				// insertion, and substitution
+				dp[i][j] = min(
+					dp[i-1][j  ] + 1,
+					dp[i  ][j-1] + 1,
+					dp[i-1][j-1] + 1
+	
+	// the levenshtein distance of the whole
+	// two string is stored in the bottom-right
+	// cell of the dp table
+	return dp[m][n]
